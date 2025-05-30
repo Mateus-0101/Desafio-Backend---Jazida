@@ -28,3 +28,8 @@ app.post('/items', (req, res) => {
     items.push(newItem);
     res.status(200).json(newItem); 
 });
+
+// Inicia o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
