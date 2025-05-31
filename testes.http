@@ -1,0 +1,45 @@
+### Criar um novo item (POST)
+POST http://localhost:3000/itens
+Content-Type: application/json
+
+{
+    "tipo": "pikachu",
+    "treinador": "Thiago"
+}
+
+###
+POST http://localhost:3000/itens
+Content-Type: application/json
+
+{
+    "tipo": "pikachu",
+    "treinador": "Alberto"
+}
+
+### Obter todos os itens (GET)
+GET http://localhost:3000/itens
+
+
+### Atualizar um item existente (PUT) - substitua 1 pelo ID real
+PUT http://localhost:3000/itens/2
+Content-Type: application/json
+
+{
+    "treinador": "Eldritch"
+}
+
+### Deletar
+DELETE http://localhost:3000/itens/1
+Content-Type: application/json
+
+{
+
+}
+
+### CARREGAR
+GET http://localhost:3000/itens/2
+Content-Type: application/json
+
+{
+    
+}
