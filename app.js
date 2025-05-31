@@ -1,4 +1,4 @@
-/// app.js
+// app.js
 
 const express = require('express');
 const app = express();
@@ -39,9 +39,20 @@ app.get('/itens', (req, res) => {
     res.status(200).json(itens);
 });
 
+// CARREGAR
+app.get('/itens/:id', (req, res) => {
+    const id = parseInt(req.params.id); // Pega o ID da URL e converte para número
+    const item = itens.find(item => item.id === id); // Procura o item no array
+
+    if (!item) {
+        return res.status(404).json({ message: 'Item não encontrado.' });
+    }
+    res.status(200).json(item);
+});
+
 // U (Update) - Alterar item da lista
 app.put('/itens/:id', (req, res) => {
-    const id = parseInt(req.params.id); // Pega o ID da URL e converte para número
+    const id = parseInt(req.params.id);
     const { treinador } = req.body;
 
     let indiceItem = itens.findIndex(item => item.id === id);
