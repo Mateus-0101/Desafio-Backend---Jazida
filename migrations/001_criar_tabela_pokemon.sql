@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS pokemons (
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(255) NOT NULL,
+    treinador VARCHAR(255) NOT NULL,
+    nivel INTEGER DEFAULT 1
+);
