@@ -43,3 +43,12 @@ Content-Type: application/json
 {
     
 }
+
+### Batalhar Pokémon 1 (ID 1) vs Pokémon 2 (ID 2)
+POST http://localhost:3000/batalhar
+Content-Type: application/json
+
+{
+    "pokemonAId": 1,
+    "pokemonBId": 2
+}
