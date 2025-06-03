@@ -1,5 +1,21 @@
 {
+  "name": "Jazida",
+  "version": "1.0.0",
+  "description": "API de criação de Pokemons com CRUD e Batalha",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "migrate": "node migrations/run-migrations.js"
+  },
+  "keywords": [],
+  "author": "Mateus Antunes Dias Rodrigues",
+  "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.10"
   }
 }
