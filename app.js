@@ -86,6 +86,87 @@ app.delete('/itens/:id', (req, res) => {
     res.status(204).send();
 })
 
+// Batalha
+app.post('/batalhar', (req, res) => {
+    // Ler pokemons
+    const { pokemonAId, pokemonBId} = req.body;
+
+    if(!pokemonAId || !pokemonBId) {
+        return res.status(400).json({ message: 'Ambos IDs são obrigatórios'});
+    }
+
+    // Conversão de ID
+    const idA = parseInt(pokemonAId);
+    const idB = parseInt(pokemonBId);
+
+    // Buscar na lista
+    const pokemonA = itens.find(item => item.id === idA);
+    const pokemonB = itens.find(item => item.id === idB);
+
+    if(!pokemonA || !pokemonB) {
+        return res.status(400).json({ message: 'Um dos pokemons não foi encontrado na lista'});
+    }
+
+    // Não permitir batalha contra si mesmo
+    if (pokemonA.id === pokemonB.id) {
+        return res.status(400).json({ message: 'Não é permitido batalhar contra si mesmo.' });
+    }
+
+    // Flags de Resultado
+    let vencedor = null;
+    let perdedor = null;
+    let morte = null;
+
+    // Cálculo de chances baseado nos níveis
+    const nivelA = pokemonA.nivel;
+    const nivelB = pokemonB.nivel;
+
+    // Geração das chances de ganho
+    const somaNiveis = nivelA + nivelB;
+    const sorte = Math.random() * somaNiveis;
+
+    // Chance = (nivel/somaNiveis)
+    /*  Uma "linha" de 0 a totalNiveis:
+        A parte que representa a chance do Pokémon A ganhar vai de 0 até nivel1.
+        A parte que representa a chance do Pokémon B ganhar vai de nivel1 até totalNiveis.
+        Se a "sorte" cair na primeira parte (< nivelA), o Pokémon A vence. Caso contrário (cair na segunda parte), o Pokémon B vence.
+    */
+    if (sorte < nivelA) {
+        vencedor = pokemonA;
+        perdedor = pokemonB;
+    } else {
+        vencedor = pokemonB;
+        perdedor = pokemonA;
+    }
+
+    // Atualizando níveis
+    vencedor.nivel++;
+    perdedor.nivel--;
+
+    const resposta = {
+        vencedor: {
+            id: vencedor.id,
+            tipo: vencedor.tipo,
+            treinador: vencedor.treinador,
+            nivel: vencedor.nivel 
+        },
+        perdedor: {
+            id: perdedor.id,
+            tipo: perdedor.tipo,
+            treinador: perdedor.treinador,
+            nivel: perdedor.nivel
+        }
+    };
+
+    res.status(200).json(resposta);
+
+    if (perdedor.nivel <= 0) {
+        // Deletar o Pokémon perdedor
+        itens = itens.filter(item => item.id !== perdedor.id);
+        morte = true;
+    }
+});
+
 // Inicia o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
