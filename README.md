@@ -33,6 +33,10 @@ A aplicação utiliza **PostgreSQL** como banco de dados e é totalmente **conte
     * **Docker Compose:** Para orquestrar múltiplos containers (aplicação e banco de dados).
 * **Ferramentas de Desenvolvimento:**
     * **Nodemon:** Para reinício automático do servidor durante o desenvolvimento.
+* **Testes:**
+    * **Jest** (Unitários), Supertest
+* **Documentação da API:**
+    * Swagger/OpenAPI (com `swagger-ui-express` e `yamljs`) 
 ---
 
 ## 📋 Requisitos para Rodar
@@ -104,6 +108,29 @@ Siga os passos abaixo para configurar e iniciar a aplicação:
     docker-compose ps
     ```
     Ambos devem exibir `Up` na coluna `State`.
+
+6. **Testes**
+
+   O projeto inclui testes unitários e de integração utilizando Jest e Supertest.
+
+   ### Executando Testes Unitários
+
+   Os testes unitários verificam a lógica isolada da aplicação (e.g., a lógica de batalha).
+
+   Para rodar os testes unitários:
+
+   ```bash
+   npm test
+7. **Documentação Automática (Swagger/OpenAPI)**
+
+   A API possui documentação interativa gerada automaticamente com Swagger UI, baseada no arquivo `swagger.yaml`.
+   
+   Para acessar a documentação:
+   
+   1.  Certifique-se de que sua aplicação está rodando (via `docker-compose up -d`).
+   2.  Abra seu navegador e acesse: `http://localhost:3000/api-docs`
+   
+   Lá você poderá ver todas as rotas da API, seus parâmetros e modelos de resposta
 
 ## 📍 Endpoints da API
 
