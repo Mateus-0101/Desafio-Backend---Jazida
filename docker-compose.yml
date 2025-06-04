@@ -5,11 +5,11 @@ services:
     image: postgres:13-alpine
     restart: always
     environment:
-      POSTGRES_DB: pokemon_db           # Nome do banco de dados
-      POSTGRES_USERS: usuario_pokemon   # Usuário do banco
-      POSTGRES_PASSWORD: senha_pokemons # Senha do usuário
+      POSTGRES_DB: pokemon_db             # Nome do banco de dados
+      POSTGRES_USER: user_pokemon         # Usuário do banco
+      POSTGRES_PASSWORD: password_pokemon # Senha do usuário
     volumes:
-      -db_data:/var/lib/postgresql/data # Volume para persistir os dados do banco
+      - db_data:/var/lib/postgresql/data # Volume para persistir os dados do banco
     ports:
       - "5432:5432" # Mapeando a porta do container para a porta da máquina
   
@@ -17,7 +17,7 @@ services:
     build: .  # Constrói a imagem Docker da aplicação a partir do Dockerfile na pasta
     restart: always
     ports:
-      -"3000:3000" # Mapeando a porta do container para a porta da máquina
+      - "3000:3000" # Mapeando a porta do container para a porta da máquina
     environment:
       DATABASE_URL: postgres://user_pokemon:password_pokemon@db:5432/pokemon_db # URL de conexão com o banco
     depends_on:
