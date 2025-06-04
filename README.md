@@ -94,7 +94,7 @@ Siga os passos abaixo para configurar e iniciar a aplicação:
             docker-compose down --volumes # Isso vai parar, remover os containers e APAGAR os dados do banco
             docker-compose up --build     # E iniciar tudo do zero novamente
             ```
-            **Cuidado:** `down --volumes` apaga todos os dados do banco. Use-o se estiver tendo problemas de inicialização ou se quiser um banco de dados limpo.
+ **Cuidado:** `down --volumes` apaga todos os dados do banco. Use-o se estiver tendo problemas de inicialização ou se quiser um banco de dados limpo.
 
 5.  **Verifique o Status dos Containers:**
 
