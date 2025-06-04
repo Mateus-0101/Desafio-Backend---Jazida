@@ -2,10 +2,22 @@
 
 const express = require('express');
 const { Client } = require('pg'); // Importando o cliente PostgreSQL
+// Teste unitário do algoritmo de batalha
+const { simularBatalha } = require('./utils/logica_batalha');
+
+// Swagger ---
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml'); 
+// ------------------------------------
+
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
+
+// Rota para a documentação Swagger UI ---
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const tiposPermitidos = ['charizard', 'mewtwo', 'pikachu'];
 
@@ -19,8 +31,10 @@ client.connect()
     .then(() => console.log('Conectado ao PostgreSQL com sucesso!'))
     .catch(err => {
         console.error('Erro de conexão ao PostgreSQL:', err);
-        process.exit(1); // Encerra a aplicação se não conseguir conectar ao DB
+        process.exit(1); // Encerra o app se não conseguir conectar ao DB
     });
+
+app.use(express.json()); // Middleware para parsear JSON no corpo das requisições
 
 // C (Create) - Criar um novo item -> Agora assíncrona
 app.post('/itens', async (req, res) => {
@@ -228,7 +242,14 @@ app.post('/batalhar', async (req, res) => {
     }
 });
 
-// Inicia o servidor
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+// Exportar o app para ser usado nos testes
+
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Servidor rodando em http://localhost:${port}`);
+        console.log(`Documentação da API disponível em http://localhost:${port}/api-docs`); 
+    });
+}
+
+// Exportar o app e o client para os testes
+module.exports = { app, client }; 
