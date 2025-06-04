@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   db:
@@ -12,16 +12,25 @@ services:
       - db_data:/var/lib/postgresql/data # Volume para persistir os dados do banco
     ports:
       - "5432:5432" # Mapeando a porta do container para a porta da máquina
-  
+  db_test: #  Serviço de banco para testes
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: pokemon_test_db         # Nome do banco de dados de teste
+      POSTGRES_USER: user_pokemon
+      POSTGRES_PASSWORD: password_pokemon
+    ports:
+      - "5433:5432"                        # Mapeando para uma porta 
   app:
-    build: .  # Constrói a imagem Docker da aplicação a partir do Dockerfile na pasta
+    build: .  # Constrói a imagem Docker a partir do Dockerfile 
     restart: always
     ports:
       - "3000:3000" # Mapeando a porta do container para a porta da máquina
     environment:
       DATABASE_URL: postgres://user_pokemon:password_pokemon@db:5432/pokemon_db # URL de conexão com o banco
+      DATABASE_TEST_URL: postgres://user_pokemon:password_pokemon@db_test:5432/pokemon_test_db 
     depends_on:
       - db
+      - db_test
     volumes:
       - .:/usr/src/app              # Monta o diretório atual no container 
       - /usr/src/app/node_modules   # Evita que a pasta node_modules local sobrescreva a do container
