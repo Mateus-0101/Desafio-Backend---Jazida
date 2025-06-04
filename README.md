@@ -1,4 +1,5 @@
-
+# API de Batalha e Gerenciamento de Pokémon
+---
 ## 🚀 Visão Geral do Projeto
 
 Este projeto consiste em uma **API RESTful** desenvolvida com Node.js e Express, projetada para gerenciar uma coleção de Pokémon e simular batalhas entre eles. 
@@ -87,8 +88,9 @@ Siga os passos abaixo para configurar e iniciar a aplicação:
     ```
 
     * **Observação Importante (Troubleshooting):**
-    *    * Caso ocorra erros com a configuração do Docker, pode ser que o volume de dados do PostgreSQL estejam "sujos"
-         * Use esse comandos para apagar os dados dos conteiners com uma configuração errada.
+       * Caso ocorra erros com a configuração do Docker, pode ser que o volume de dados do PostgreSQL estejam "sujos"
+       * Use esse comandos para apagar os dados dos conteiners com uma configuração errada.
+     ```bash
             docker-compose down --volumes # Isso vai parar, remover os containers e APAGAR os dados do banco
             docker-compose up --build     # E iniciar tudo do zero novamente
             ```
